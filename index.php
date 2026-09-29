@@ -23,9 +23,9 @@
                 <img src="img/logo-text.png" alt="Logo Gabarita" id="logo-image">
             </div>
             <div class="nav-links">
-                <a href="#" class="active">Início</a>
-                <a href="#">Recursos</a>
-                <a href="#">Depoimentos</a>
+                <a href="#title" class="active">Início</a>
+                <a href="#resources">Recursos</a>
+                <a href="#depoimentos">Depoimentos</a>
             </div>
             <div class="nav-actions">
                 <a href="login.php" class="btn-entrar">Entrar</a>
@@ -36,7 +36,7 @@
 
     <main>
 
-        <section class="title-section">
+        <section class="title-section" id = "title">
             <div class="title-div">
                 <h1 class="title">Sua Aprovação em Concursos Públicos Começa Aqui!</h1>
                 <p class="title-text">Prepare-se com uma plataforma de estudos gamificada e dinâmica. Milhares de
@@ -48,7 +48,7 @@
             </div>
         </section>
 
-        <section class="resources-section">
+        <section class="resources-section" id = "resources">
             <div class="resources-div">
                 <h1 class="resources-title">Por que estudar com o Gabarita?</h1>
                 <p class="resources-text">Uma experiência de estudo projetada de ponta a ponta para maximizar suas
@@ -75,7 +75,7 @@
                 </div>
             </div>
         </section>
-        <section class="depoimentos-section">
+        <section class="depoimentos-section" id = "depoimentos">
             <div class="depoimentos-div">
                 <h1 class="depoimentos-title">Aprovados pelo Gabarita</h1>
                 <div class="depoimentos-cards">
@@ -111,17 +111,17 @@
             <img src="img/footer-image.png" class="footer-image">
         </div>
         <div class="footer-div">
-            <div class = "footer-line">
-            <div class="footer-left">
-                <h3 class="footer-title">IFSP - Trabalho Acadêmico</h3>
-                <p>Todos os direitos reservados</p>
-            </div>
-            <div class="footer-right">
-                <h3 class="footer-title">Equipe</h3>
-                <p>Miguel Angelo de Andrade</p>
-                <p>Henry Jose de Lira Seorlin</p>
-                <p>Hadryan Gabriel de Souza Lopo</p>
-            </div>
+            <div class="footer-line">
+                <div class="footer-left">
+                    <h3 class="footer-title">IFSP - Trabalho Acadêmico</h3>
+                    <p>Todos os direitos reservados</p>
+                </div>
+                <div class="footer-right">
+                    <h3 class="footer-title">Equipe</h3>
+                    <p>Miguel Angelo de Andrade</p>
+                    <p>Henry Jose de Lira Seorlin</p>
+                    <p>Hadryan Gabriel de Souza Lopo</p>
+                </div>
             </div>
             <div class="footer-bottom">
                 <p>© 2026 Gabarita. Todos os direitos reservados.</p>
@@ -129,7 +129,7 @@
         </div>
 
     </footer>
-
+    <script src = "script.js"></script>
 </body>
 
 </html>
