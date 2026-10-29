@@ -14,7 +14,7 @@ header {
     display: flex;
     justify-content: center;
     background-color: #fefefe;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     left: 0;
@@ -26,10 +26,13 @@ header {
     align-items: center;
     max-width: 90vw;
     width: 100%;
+    height: 6rem;
     padding: 1rem 2rem;
 
 }
-
+#body-landing-page {
+    background-color: #f4f7fc;
+}
 .logo {
     display: flex;
     align-items: center;
@@ -37,7 +40,7 @@ header {
 }
 
 #logo-image {
-    height: 5rem;
+    width: 5rem;
 }
 
 .nav-links,
@@ -264,7 +267,7 @@ a {
     color: white;
 }
 #body-cadastro, #body-login {
-    background-color: #f8fafc; /* Fundo cinza bem claro e limpo */
+    background-color: #f8fafc; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -286,7 +289,7 @@ a {
     max-width: 540px;
     padding: 4rem 5rem 5rem 5rem;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6); /* Sombra bem sutil */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6); 
     border: 1px solid #f1f5f9;
 }
 
@@ -435,20 +438,18 @@ input:focus {
     color: inherit;
 }
 
-/* Top Navbar */
 .g-navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #ffffff;
     padding: 12px 40px;
-    border-bottom: 1px solid var(--g-border);
     position: sticky;
     top: 0;
     z-index: 100;
-    height: 70px;
+    height: 6rem;
     width: 100%;
-    box-shadow: none; /* Previne herança indesejada */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1)
 }
 
 .g-logo-area {
@@ -538,24 +539,31 @@ input:focus {
     background-size: cover;
 }
 
-/* Layout Grid Principal */
+
 .g-main-layout {
     display: grid;
     grid-template-columns: 280px 1fr;
     min-height: calc(100vh - 70px);
 }
 
-/* Sidebar Filtros */
+#g-account-icon {
+    width: 2.5rem;
+        margin-left: 2vw;
+        margin-right: 0.5vw;
+}
+
 .g-sidebar {
     background-color: var(--g-sidebar);
     padding: 30px 24px;
     border-right: 1px solid var(--g-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1)
 }
 
 .g-sidebar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 10rem;
     margin-bottom: 25px;
 }
 
@@ -619,15 +627,13 @@ input:focus {
     background-color: var(--g-primary-hover);
 }
 
-/* Área de Conteúdo */
+
 .g-content-area {
     padding: 40px;
     max-width: 1100px;
     width: 100%;
     margin: 0 auto;
 }
-
-/* Estado Vazio */
 .g-empty-state {
     display: flex;
     flex-direction: column;
@@ -649,12 +655,12 @@ input:focus {
     font-size: 22px;
 }
 
-/* Auxiliar Ocultar */
+
 .g-hidden {
     display: none !important;
 }
 
-/* Resultados Header */
+
 .g-results-header {
     display: flex;
     justify-content: space-between;
@@ -677,7 +683,7 @@ input:focus {
     color: #0f172a;
 }
 
-/* Card de Questão */
+
 .g-question-card {
     background-color: #ffffff;
     border: 1px solid var(--g-border);
@@ -713,7 +719,15 @@ input:focus {
     color: #334155;
 }
 
-/* Alternativas */
+
+.g-logout-icon {
+    color: white;
+    margin-left: 2vw;
+    background-color: #0d9488;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
 .g-alternatives-list {
     display: flex;
     flex-direction: column;
@@ -808,7 +822,14 @@ input:focus {
     cursor: pointer;
     transition: background 0.2s;
 }
+.g-logo-image {
+    width: 5rem;
+    margin-left: 5rem;
+}
 
+.g-image-text {
+    margin-left: -1%;
+}
 .g-btn-action-primary:hover {
     background-color: var(--g-primary-hover);
 }
@@ -826,7 +847,6 @@ input:focus {
     font-weight: bold;
 }
 
-/* Paginação */
 .g-pagination {
     display: flex;
     justify-content: center;

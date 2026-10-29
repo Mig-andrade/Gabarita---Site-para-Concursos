@@ -15,7 +15,7 @@
     <title>Gabarita</title>
 </head>
 
-<body>
+<body id = "body-landing-page">
 
     <header>
         <div class="navbar">

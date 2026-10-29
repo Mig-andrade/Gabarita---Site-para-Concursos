@@ -44,3 +44,29 @@ const observer = new IntersectionObserver((entries) => {
 sections.forEach(section => {
     observer.observe(section);
 });
+
+        const btnFiltrar = document.getElementById('btnFiltrar');
+        const searchInput = document.getElementById('searchInput');
+        const emptyState = document.getElementById('emptyState');
+        const questionsContainer = document.getElementById('questionsContainer');
+
+        function dispararBusca() {
+            emptyState.classList.add('g-hidden');
+            questionsContainer.classList.remove('g-hidden');
+        }
+
+        btnFiltrar.addEventListener('click', dispararBusca);
+        searchInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                dispararBusca();
+            }
+        });
+
+        // Alternância exclusiva usando a nova classe protegida .g-selected
+        const items = document.querySelectorAll('.g-alternative-item');
+        items.forEach(item => {
+            item.addEventListener('click', () => {
+                items.forEach(i => i.classList.remove('g-selected'));
+                item.add('g-selected');
+            });
+        });
