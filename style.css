@@ -476,11 +476,12 @@ input:focus {
 }
 
 .g-search-bar input {
-    width: 100%;
+    width: 25rem;
     padding: 12px 16px;
     background-color: #f1f5f9;
     border: 1px solid transparent;
     border-radius: 8px;
+    margin-left: -10 0px;
     font-size: 14px;
     outline: none;
     transition: all 0.2s;
@@ -552,27 +553,30 @@ input:focus {
         margin-right: 0.5vw;
 }
 
-.g-sidebar {
-    background-color: var(--g-sidebar);
-    padding: 30px 24px;
-    border-right: 1px solid var(--g-border);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1)
-}
+        .g-sidebar {
+            background-color: var(--g-sidebar);
+            padding: 30px 24px;
+            border-right: 1px solid var(--g-border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            padding-top: 50px;
+            top: 100px;
+            height: fit-content;
+        }
 
-.g-sidebar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10rem;
-    margin-bottom: 25px;
-}
+        .g-sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
 
-.g-sidebar-header h3 {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--g-text-muted);
-}
+        .g-sidebar-header h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--g-text-muted);
+        }
 
 .g-clear-filters {
     font-size: 12px;
