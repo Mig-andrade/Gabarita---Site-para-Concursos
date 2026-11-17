@@ -559,9 +559,9 @@ input:focus {
             border-right: 1px solid var(--g-border);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: sticky;
-            padding-top: 50px;
+            padding-top: 130px;
             top: 100px;
-            height: fit-content;
+            height: 91vh;
         }
 
         .g-sidebar-header {
@@ -585,7 +585,7 @@ input:focus {
 }
 
 .g-filter-group {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .g-filter-group label {

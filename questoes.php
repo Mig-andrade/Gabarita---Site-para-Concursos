@@ -11,21 +11,22 @@ if (!isset($_SESSION['usuario_id'])) {
 $resposta_id = null;
 $alt_selecionada = null;
 $resultado = null;
+$gabarito = null; // Adicione esta linha
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $resposta_id = $_POST['questao_id'] ?? null;
     $alt_selecionada = $_POST['alternativa'] ?? null;
 }
 
-if ($resposta_id !== null && in_array($alt_selecionada, ['A', 'B', 'C', 'D', 'E'])) {
+if ($resposta_id !== null && in_array($alt_selecionada, ['A', 'B', 'C', 'D'])) {
     $stmt = $pdo->prepare(
         "SELECT alt_correta FROM tb_questoes WHERE id = :id"
     );
     $stmt->execute([':id' => $resposta_id]);
-    $questao = $stmt->fetch(PDO::FETCH_ASSOC);
+    $questao_resp = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($questao) {
-        $gabarito = strtoupper(trim($questao['alt_correta']));
+    if ($questao_resp) {
+        $gabarito = strtoupper(trim($questao_resp['alt_correta']));
         $resultado = ($alt_selecionada === $gabarito);
     }
 }
@@ -36,6 +37,7 @@ $materia = $_GET['materia'] ?? 'Todos(as)';
 $banca = $_GET['banca'] ?? 'Todos(as)';
 $ano = $_GET['ano'] ?? 'Todos(as)';
 $dificuldade = $_GET['dificuldade'] ?? 'Todos(as)';
+
 
 // Verifica se alguma pesquisa foi realizada
 $pesquisa_realizada = isset($_GET['Filtrar']) || !empty($busca);
@@ -354,57 +356,36 @@ if ($pesquisa_realizada) {
                         <!-- LOOP DAS QUESTÕES -->
                         <?php foreach ($questoes as $questao): ?>
 
-                            <article class="g-question-card">
+                            <article class="g-question-card" id="questao-<?= (int) $questao['id'] ?>">
 
                                 <!-- TAGS -->
                                 <div class="g-tags-container">
-
-                                    <span class="g-tag g-tag-blue">
-
-                                        Matéria:
-                                        <?= htmlspecialchars($questao['materia'], ENT_QUOTES, 'UTF-8') ?>
-
-                                    </span>
-
-                                    <span class="g-tag g-tag-lightblue">
-
-                                        Banca:
-                                        <?= htmlspecialchars($questao['banca'], ENT_QUOTES, 'UTF-8') ?>
-
-                                    </span>
-
-                                    <span class="g-tag g-tag-purple">
-
-                                        Ano:
-                                        <?= htmlspecialchars($questao['ano'], ENT_QUOTES, 'UTF-8') ?>
-
-                                    </span>
-
-                                    <span class="g-tag g-tag-orange">
-
-                                        Dificuldade:
-                                        <?= htmlspecialchars($questao['dificuldade'], ENT_QUOTES, 'UTF-8') ?>
-
-                                    </span>
-
+                                    <span class="g-tag g-tag-blue">Matéria:
+                                        <?= htmlspecialchars($questao['materia'], ENT_QUOTES, 'UTF-8') ?></span>
+                                    <span class="g-tag g-tag-lightblue">Banca:
+                                        <?= htmlspecialchars($questao['banca'], ENT_QUOTES, 'UTF-8') ?></span>
+                                    <span class="g-tag g-tag-purple">Ano:
+                                        <?= htmlspecialchars($questao['ano'], ENT_QUOTES, 'UTF-8') ?></span>
+                                    <span class="g-tag g-tag-orange">Dificuldade:
+                                        <?= htmlspecialchars($questao['dificuldade'], ENT_QUOTES, 'UTF-8') ?></span>
                                 </div>
-
 
                                 <!-- ENUNCIADO -->
                                 <p class="g-question-text">
-
                                     <?= nl2br(htmlspecialchars($questao['enunciado'], ENT_QUOTES, 'UTF-8')) ?>
-
                                 </p>
 
-                                <form method="POST" action=""><input type="hidden" name="questao_id"
-                                        value="<?= (int) $questao['id'] ?>">
+                                <?php
+                                // Verifica se ESTA questão específica foi a que o usuário acabou de responder
+                                $foi_respondida = ((int) $resposta_id === (int) $questao['id'] && $resultado !== null);
+                                ?>
+
+                                <form method="POST" action="#questao-<?= (int) $questao['id'] ?>">
+                                    <input type="hidden" name="questao_id" value="<?= (int) $questao['id'] ?>">
 
                                     <!-- ALTERNATIVAS -->
                                     <div class="g-alternatives-list">
-
                                         <?php
-
                                         $alternativas = [
                                             'A' => 'alt_a',
                                             'B' => 'alt_b',
@@ -412,56 +393,73 @@ if ($pesquisa_realizada) {
                                             'D' => 'alt_d',
                                             'E' => 'alt_e'
                                         ];
-
                                         ?>
 
                                         <?php foreach ($alternativas as $letra => $coluna): ?>
-
                                             <?php if (!empty($questao[$coluna])): ?>
+                                                <?php
+                                                // Define estilos inline simples para destacar certa/errada após responder
+                                                $estilo_extra = '';
+                                                $checked = '';
 
-                                                <label class="g-alternative-item">
+                                                if ($foi_respondida) {
+                                                    if ($letra === $alt_selecionada) {
+                                                        $checked = 'checked';
+                                                    }
+                                                    if ($letra === $gabarito) {
+                                                        $estilo_extra = 'border: 2px solid #22c55e; background-color: #f0fdf4;'; // Verde (Certa)
+                                                    } elseif ($letra === $alt_selecionada && !$resultado) {
+                                                        $estilo_extra = 'border: 2px solid #ef4444; background-color: #fef2f2;'; // Vermelho (Errada)
+                                                    }
+                                                }
+                                                ?>
 
-                                                    <input type="radio" name="alternativa" value="<?= $letra ?>" required>
-
-                                                    <div class="g-alternative-letter">
-                                                        <?= $letra ?>
-                                                    </div>
-
-                                                    <div>
-                                                        <?= nl2br(htmlspecialchars($questao[$coluna], ENT_QUOTES, 'UTF-8')) ?>
-                                                    </div>
-
+                                                <label class="g-alternative-item" style="<?= $estilo_extra ?>">
+                                                    <input type="radio" name="alternativa" value="<?= $letra ?>" <?= $checked ?>
+                                                        required>
+                                                    <div class="g-alternative-letter"><?= $letra ?></div>
+                                                    <div><?= nl2br(htmlspecialchars($questao[$coluna], ENT_QUOTES, 'UTF-8')) ?></div>
                                                 </label>
-
                                             <?php endif; ?>
-
                                         <?php endforeach; ?>
-
                                     </div>
 
+                                    <!-- MENSAGEM DE FEEDBACK (CORRETO / ERRADO) -->
+                                    <?php if ($foi_respondida): ?>
+                                        <?php if ($resultado): ?>
+                                            <div
+                                                style="margin-top: 15px; padding: 12px; border-radius: 8px; background-color: #dcfce7; color: #166534; font-weight: 600;">
+                                                Parabéns! Você acertou! A resposta correta é a alternativa <?= $gabarito ?>.
+                                            </div>
+                                        <?php else: ?>
+                                            <div
+                                                style="margin-top: 15px; padding: 12px; border-radius: 8px; background-color: #fee2e2; color: #991b1b; font-weight: 600;">
+                                                Resposta incorreta. Você marcou a alternativa <?= htmlspecialchars($alt_selecionada) ?>,
+                                                mas a correta é a alternativa <?= $gabarito ?>.
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
 
                                     <!-- RODAPÉ DO CARD -->
                                     <div class="g-card-footer">
-
                                         <div class="g-footer-left">
-
                                             <button class="g-btn-secondary" type="button">
                                                 Ver Comentário do Professor
                                             </button>
 
-                                            <button class="g-btn-action-primary" type="button">
+                                            <!-- ALTERADO DE type="button" PARA type="submit" -->
+                                            <button class="g-btn-action-primary" type="submit">
                                                 Responder Questão
                                             </button>
-
                                         </div>
 
                                         <button class="g-btn-xp" type="button">
                                             ⭐ +150 XP
                                         </button>
-
                                     </div>
                                 </form>
                             </article>
+
 
                         <?php endforeach; ?>
 
@@ -482,4 +480,3 @@ if ($pesquisa_realizada) {
 </body>
 
 </html>
-```
